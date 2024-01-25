@@ -3,33 +3,53 @@ package com.example.demoxml
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.demoxml.databinding.ViewMediaItemBinding
 
-class MediaAdapter(private val items: List<MediaItem>) :
+interface Listener{
+    fun onClick(mediaItem: MediaItem)
+}
+
+class MediaAdapter(private val items: List<MediaItem>, private val listener: Listener) :
     RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.view_media_item, parent, false)
+        val v = parent.inflate(R.layout.view_media_item)
         return ViewHolder(v)
+
+        val binding = ViewMediaItemBinding.inflate(LayoutInflater.from(parent.context))
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        val item = items[position]
+        holder.bind(item)
+        holder.itemView.setOnClickListener { listener.onClick(mediaItem = item) }
     }
 
     override fun getItemCount(): Int = items.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val title = view.findViewById<TextView>(R.id.mediaTitle)
-        private val thumb = view.findViewById<ImageView>(R.id.mediaThumb)
+        private val binding = ViewMediaItemBinding.bind(view)
+
+//        private val title = view.findViewById<TextView>(R.id.mediaTitle)
+//        private val thumb = view.findViewById<ImageView>(R.id.mediaThumb)
+//        private val vidoIndicator = view.findViewById<ImageView>(R.id.mediaVideoIndicator)
 
         fun bind(mediaItem: MediaItem) {
-            title.text = mediaItem.title
-            Glide.with(thumb).load(mediaItem.url).into(thumb)
+            with(binding) {
+                mediaTitle.text = mediaItem.title
+                mediaThumb.loadUrl(mediaItem.url)
+                mediaVideoIndicator.visibility = when (mediaItem.type) {
+                    MediaItem.Type.PHOTO -> View.GONE
+                    MediaItem.Type.VIDEO -> View.VISIBLE
+                }
+            }
         }
     }
 }
+
+
+
+
