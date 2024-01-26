@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoxml.databinding.ViewMediaItemBinding
 
-interface Listener{
-    fun onClick(mediaItem: MediaItem)
-}
+//interface Listener{
+//    fun onClick(mediaItem: MediaItem)
+//}
 
-class MediaAdapter(private val items: List<MediaItem>, private val listener: Listener) :
+class MediaAdapter(private val items: List<MediaItem>, private val listener: (mediaItem: MediaItem) -> Unit) :
     RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +24,7 @@ class MediaAdapter(private val items: List<MediaItem>, private val listener: Lis
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener { listener.onClick(mediaItem = item) }
+        holder.itemView.setOnClickListener { listener(item) }
     }
 
     override fun getItemCount(): Int = items.size

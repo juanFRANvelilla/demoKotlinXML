@@ -20,11 +20,14 @@ class MainActivity : AppCompatActivity(), Loger{
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.recycler.adapter = MediaAdapter(getItems(), object : Listener{
-            override fun onClick(mediaItem: MediaItem) {
-                toast(mediaItem.title)
+        binding.recycler.adapter = MediaAdapter(getItems())  {
+                toast(it.title)
             }
-        })
+//        binding.recycler.adapter = MediaAdapter(getItems(), object : Listener{
+//            override fun onClick(mediaItem: MediaItem) {
+//                toast(mediaItem.title)
+//            }
+//        })
 
 
 //        startActivity<MainActivity>()
