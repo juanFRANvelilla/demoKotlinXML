@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import com.example.demoxml.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), Loger{
 
     override val tag: String = javaClass.simpleName
+    val adapter by lazy {MediaAdapter(getItems())  {
+        toast(it.title)
+    }}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +23,13 @@ class MainActivity : AppCompatActivity(), Loger{
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.recycler.adapter = MediaAdapter(getItems())  {
-                toast(it.title)
-            }
+        binding.recycler.adapter = adapter
 //        binding.recycler.adapter = MediaAdapter(getItems(), object : Listener{
 //            override fun onClick(mediaItem: MediaItem) {
 //                toast(mediaItem.title)
 //            }
 //        })
+        adapter.items = getItems()
 
 
 //        startActivity<MainActivity>()
