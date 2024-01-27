@@ -1,6 +1,5 @@
 package com.example.demoxml
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +20,6 @@ class MediaAdapter(items: List<MediaItem> = emptyList(), private val listener: (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = parent.inflate(R.layout.view_media_item)
         return ViewHolder(v)
-
-        val binding = ViewMediaItemBinding.inflate(LayoutInflater.from(parent.context))
-        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -12,16 +12,12 @@ import com.example.demoxml.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), Loger{
 
     override val tag: String = javaClass.simpleName
-    val adapter by lazy {MediaAdapter(getItems())  {
+    val adapter by lazy {MediaAdapter(MediaProvider.getItems())  {
         toast(it.title)
     }}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        setContentView(R.layout.activity_main)d
-//        val recycler: RecyclerView = findViewById(R.id.recycler)
-//        recycler.adapter = MediaAdapter(getItems())
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,7 +27,7 @@ class MainActivity : AppCompatActivity(), Loger{
 //                toast(mediaItem.title)
 //            }
 //        })
-        adapter.items = getItems()
+        adapter.items = MediaProvider.getItems()
 
 //        startActivity<MainActivity>()
 
@@ -48,7 +44,7 @@ class MainActivity : AppCompatActivity(), Loger{
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        adapter.items = getItems().let {
+        adapter.items = MediaProvider.getItems().let {
             when(item.itemId){
                 R.id.filter_photos-> it.filter { it.type == MediaItem.Type.PHOTO }
                 R.id.filter_videos -> it.filter { it.type == MediaItem.Type.VIDEO }
