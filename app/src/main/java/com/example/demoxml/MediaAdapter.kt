@@ -10,7 +10,8 @@ import kotlin.properties.Delegates
 //    fun onClick(mediaItem: MediaItem)
 //}
 
-class MediaAdapter(items: List<MediaItem> = emptyList(), private val listener: (mediaItem: MediaItem) -> Unit) :
+class MediaAdapter(items: List<MediaItem> = emptyList(), private val listener: (m: MediaItem) -> Unit) :
+//class MediaAdapter(items: List<MediaItem> = emptyList(), private val listener: Listener) :
     RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
 
     var items: List<MediaItem> by Delegates.observable(items){_, _, _ ->
@@ -26,6 +27,7 @@ class MediaAdapter(items: List<MediaItem> = emptyList(), private val listener: (
         val item = items[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { listener(item) }
+//        holder.itemView.setOnClickListener { listener.onClick(item) }
     }
 
     override fun getItemCount(): Int = items.size
